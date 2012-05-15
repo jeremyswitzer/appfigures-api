@@ -1,4 +1,5 @@
 from sales import SalesClient
+from reviews import ReviewsClient
 
 PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1/"
 
@@ -13,6 +14,7 @@ class Client():
         self._password = password
         self._base_url = base_url
         self._sales = SalesClient(user, password, base_url)
+        self._reviews = ReviewsClient(user, password, base_url)
     
     #Sales API
     def get_sales_report_by_product(self, startdate=None, enddate=None, **kwargs):
@@ -126,3 +128,23 @@ class Client():
         """
         
         return self._sales.get_sales_report("countries+products", startdate, enddate, **kwargs)
+    
+    #Reviews API
+    def get_reviews_for_product_by_page(self, product_id, page, countries='major', **kwargs):
+        """Get reviews for a single product grouped by country. Reviews can only be retrieved a day at a time.
+        
+        Args:
+            product_id -- Number. id of app to pull reviews for.
+            page -- Number. zero-based page number, truncated to highest possible value if it is higher than available pages
+            countries -- Number, String, or List. Id or short-code of the country or countries to pull reviews from. "Major" selects all high-volume countries. "Minor" selects smaller countries. Android Market does not provide reviews by country
+            
+        Keyword arguments:
+            language (optional) -- short code of language to translate reviews into (You can get supported languages via DataClient)
+        
+        """
+        
+        return self._reviews.get_reviews(product_id, page, countries, **kwargs)
+    
+    
+    
+    
