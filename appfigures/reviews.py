@@ -1,24 +1,15 @@
-import requests
+from base import BaseClient
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
+REVIEWS_BASE_URI = "reviews"
 
-REVIEWS_BASE_URI = "reviews/"
-
-class ReviewsClient():
-    def __init__(self, user, password, base_url, uri=REVIEWS_BASE_URI, requester=requests):
-        self._user = user
-        self._password = password
-        self._base_url = base_url
-        self._uri = uri
-        self._requester = requester
+class ReviewsClient(BaseClient):
+    def __init__(self, base_url, result_service, uri=REVIEWS_BASE_URI):
+        super(ReviewsClient, self).__init__(base_url, uri, result_service)
         
     def get_reviews(self, product_id, page, countries, **kwargs):
-        
-        url = '%s/%s/%s/%s/%d' % (self._base_url, self._uri, product_id, countries, page)
-        result = self._requester.get(url, params=kwargs, auth=(self._user, self._password))
-        return json.loads(result.text)
+        uri = self.construct_uri(product_id, countries, page)
+        params = self.convert_params(**kwargs)
+        result = self.get_response(uri, params)
+        return result
     
     

@@ -1,33 +1,21 @@
-import requests
+from base import BaseClient
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
+SALES_BASE_URI = "sales"
 
-SALES_BASE_URI = "sales/"
-BY_PRODUCT = "products"
+SALES_BY_PRODUCT = "products"
+SALES_BY_DATE = "dates"
+SALES_BY_COUNTRY = "countries"
+SALES_BY_PRODUCT_AND_DATE = "products+dates"
+SALES_BY_DATE_AND_PRODUCT = "dates+products"
+SALES_BY_PRODUCT_AND_COUNTRY = "products+countries"
+SALES_BY_COUNTRY_AND_PRODUCT = "countries+products"
 
-class SalesClient():
-    def __init__(self, user, password, base_url, uri=SALES_BASE_URI, requester=requests):
-        self._user = user
-        self._password = password
-        self._base_url = base_url
-        self._uri = uri
-        self._requester = requester
+class SalesClient(BaseClient):
+    def __init__(self, base_url, result_service, uri=SALES_BASE_URI, **kwargs):
+        super(SalesClient, self).__init__(base_url, uri, result_service)
 
     def get_sales_report(self, report_type, startdate, enddate, **kwargs):
-        
-        url = "%s%s%s/%s/%s/" % (self._base_url, self._uri, report_type, startdate.isoformat(), enddate.isoformat())
-        query = dict([(self.underscore_to_camelcase(k), v) for k,v in kwargs.items()])
-        result = self._requester.get(url, params=query, auth=(self._user, self._password))
-        return json.loads(result.text)
-    
-    def underscore_to_camelcase(self, value):
-        def camelcase(): 
-            yield str.lower
-            while True:
-                yield str.capitalize
-    
-        c = camelcase()
-        return "".join(c.next()(x) if x else '_' for x in value.split("_"))
+        uri = self.construct_uri(report_type, startdate.isoformat(), enddate.isoformat())
+        params = self.convert_params(**kwargs)
+        result = self.get_response(uri, params)
+        return result
