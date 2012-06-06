@@ -1,6 +1,8 @@
 import sales
 from reviews import ReviewsClient
+from events import EventsClient
 from services import create_default_result_service as create_rs
+
 
 PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1/"
 
@@ -12,7 +14,8 @@ class Client:
     
     _client_settings = {
         '_sales': ('sales_client', sales.SalesClient),
-        '_reviews': ('reviews_client', ReviewsClient)
+        '_reviews': ('reviews_client', ReviewsClient),
+        '_events': ('events_client', EventsClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -147,6 +150,42 @@ class Client:
         """
         
         return self._reviews.get_reviews(product_id, page, countries, **kwargs)
+    
+    # Events API
+    def get_all_events(self):
+        """Get a list of all events. Events come in a dictionary with the event ID as the key."""
+        
+        return self._events.get_events()
+    
+    def create_new_event(self, caption, event_date, products):
+        """Create a new event. The call returns the newly created event object.
+        
+        Args:
+            caption -- String. The caption of the event.
+            event_date -- Date object or string in "yyyy-MM-dd" format. Date for the event
+            products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
+        """
+        return self._events.create_event(caption, event_date, products)
+    
+    def update_event(self, event_id, caption, event_date, products):
+        """Update info for an existing event. The call returns the updated event object
+        
+        Args:
+            event_id -- Number. The Id of the event to update.
+            caption -- String. The caption of the event.
+            event_date -- Date object or string in "yyyy-MM-dd" format. Date for the event
+            products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
+        """
+        return self._events.update_event(event_id, caption, event_date, products)
+    
+    def delete_event(self, event_id):
+        """Delete an existing event.
+        
+        Args:
+            event_id -- Number. The Id of the event to delete.
+        """
+        return self._events.delete_event(event_id)
+    
     
     
     def _init_api_clients(self, base_url, result_service, overrides):

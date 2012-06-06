@@ -6,8 +6,16 @@ class BaseClient(object):
         self._result_service = result_service
         
     def get_response(self, uri, params=None):
-        result = self._result_service.get_deserialized_result(uri, params)
-        return result
+        return self._result_service.get_deserialized_result(uri, params)
+    
+    def create_item(self, uri, params):
+        return self._result_service.create_new_result(uri, params)
+    
+    def update_item(self, uri, params):
+        return self._result_service.update_result(uri, params)
+    
+    def delete_item(self, uri):
+        return self._result_service.delete_result(uri)
     
     def construct_uri(self, *args):
         parts = [self._base_url, self._enpoint_uri]
