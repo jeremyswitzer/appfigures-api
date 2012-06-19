@@ -7,6 +7,7 @@ class ReviewsClient(BaseClient):
         super(ReviewsClient, self).__init__(base_url, uri, result_service)
         
     def get_reviews(self, product_id, page, countries, **kwargs):
+        countries = self.format_to_string(countries)
         uri = self.construct_uri(product_id, countries, page)
         params = self.convert_params(**kwargs)
         result = self.get_response(uri, params)

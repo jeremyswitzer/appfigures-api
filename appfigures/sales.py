@@ -15,7 +15,9 @@ class SalesClient(BaseClient):
         super(SalesClient, self).__init__(base_url, uri, result_service)
 
     def get_sales_report(self, report_type, startdate, enddate, **kwargs):
-        uri = self.construct_uri(report_type, startdate.isoformat(), enddate.isoformat())
+        startdate = self.format_to_string(startdate)
+        enddate = self.format_to_string(enddate)
+        uri = self.construct_uri(report_type, startdate, enddate)
         params = self.convert_params(**kwargs)
         result = self.get_response(uri, params)
         return result

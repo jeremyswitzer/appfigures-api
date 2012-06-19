@@ -1,3 +1,6 @@
+import datetime
+import types
+
 class BaseClient(object):
     
     def __init__(self, base_url, endpoint_uri, result_service):
@@ -24,8 +27,24 @@ class BaseClient(object):
         uri = '/'.join(parts)
         return uri
     
+    def format_date(self, date_obj):
+        return date_obj.isoformat()
+    
+    def format_list(self, list_obj):
+        return ';'.join(map(str, list_obj))
+    
+    def format_to_string(self, obj):
+        if isinstance(obj, datetime.date):
+            return self.format_date(obj)
+        elif isinstance(obj, types.ListType):
+            return self.format_list(obj)
+        else:
+            return obj
+            
     def convert_params(self, **kwargs):
-        return dict([(self.underscore_to_camelcase(k), v) for k,v in kwargs.items()])
+        fmt = self.format_to_string
+        u2c = self.underscore_to_camelcase
+        return dict([(u2c(k), fmt(v)) for k,v in kwargs.items()])
         
     def underscore_to_camelcase(self, value):
         def camelcase(): 
