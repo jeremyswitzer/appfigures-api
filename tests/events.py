@@ -1,4 +1,3 @@
-
 import unittest
 from datetime import date
 from mock import MagicMock
@@ -6,12 +5,10 @@ from appfigures.events import EventsClient, EVENTS_BASE_URI
 
 class EventsClientTest(unittest.TestCase):
 
-
     def setUp(self):
         self.base_url = "http://example.com"
         self.result_service = MagicMock()
         self.events_client = EventsClient(self.base_url, self.result_service)
-
 
     def test_get_reviews(self):
         result_dict = { 'test': 'test' }
@@ -40,7 +37,6 @@ class EventsClientTest(unittest.TestCase):
         
         self.assertDictEqual(result, result_dict)
         self.result_service.create_new_result.assert_called_once_with(expected_uri, expected_params)
-        
         
     def test_update_review(self):
         result_dict = { 'test': 'test' }
@@ -72,6 +68,5 @@ class EventsClientTest(unittest.TestCase):
         self.assertTrue(result)
         self.result_service.delete_result.assert_called_once_with(expected_uri)
         
-
 if __name__ == "__main__":
     unittest.main()
