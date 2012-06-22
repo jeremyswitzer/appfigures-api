@@ -1,21 +1,28 @@
 import sales
 from reviews import ReviewsClient
 from events import EventsClient
+from ranks import RanksClient
 from services import create_default_result_service as create_rs
 
 
 PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1/"
 
+DATASOURCE_HOURLY = "hourly"
 DATASOURCE_DAILY = "daily"
 DATASOURCE_WEEKLY = "weekly"
 DATASOURCE_MONTHLY = "monthly"
+
+TIMEZONE_USER = "user"
+TIMEZONE_UTC = "utc"
+TIMEZONE_EST = "est"
 
 class Client:
     
     _client_settings = {
         '_sales': ('sales_client', sales.SalesClient),
         '_reviews': ('reviews_client', ReviewsClient),
-        '_events': ('events_client', EventsClient)
+        '_events': ('events_client', EventsClient),
+        '_ranks': ('ranks_client', RanksClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -186,6 +193,40 @@ class Client:
         """
         return self._events.delete_event(event_id)
     
+    #Ranks API
+    def get_hourly_ranks(self, products, startdate, enddate, **kwargs):
+        """Generate a Ranks Report by the hour.
+        
+        Args:
+            products -- List. The product ID(s) to get ranks data for.
+            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format.
+            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format.            
+        Keyword arguments:
+            countries (optional) -- List of countryId or isoCode. Countries to run report on. (default: US)
+            tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
+            filter (optional) -- Number (1 - 400). Top N ranks. A filter value of 100 will only show records where the rank position is better than 100. (default: 100)
+        """
+        return self._ranks.get_ranks(products, DATASOURCE_HOURLY, startdate, enddate, **kwargs)
+    
+    def get_daily_ranks(self, products, startdate, enddate, **kwargs):
+        """Generate a Ranks Report by the day.
+        
+        Args:
+            products -- List. The product ID(s) to get ranks data for.
+            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format.
+            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format.            
+        Keyword arguments:
+            countries (optional) -- List of countryId or isoCode. Countries to run report on. (default: US)
+            tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
+            filter (optional) -- Number (1 - 400). Top N ranks. A filter value of 100 will only show records where the rank position is better than 100. (default: 100)
+        """
+        return self._ranks.get_ranks(products, DATASOURCE_DAILY, startdate, enddate, **kwargs)
+    
+    #iAds API
+    #Archive API
+    #Users API
+    #External Accounts API
+    #Data API
     
     
     def _init_api_clients(self, base_url, result_service, overrides):
