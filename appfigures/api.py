@@ -5,7 +5,7 @@ from ranks import RanksClient
 from services import create_default_result_service as create_rs
 
 
-PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1/"
+PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1"
 
 DATASOURCE_HOURLY = "hourly"
 DATASOURCE_DAILY = "daily"
@@ -26,8 +26,8 @@ class Client:
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
-        result_service = kwargs.get("result_service", create_rs(user, password))
-        self._init_api_clients(base_url, result_service, kwargs)
+        result_service = kwargs.get("result_service", create_rs(user, password, base_url))
+        self._init_api_clients(result_service, kwargs)
     
     #Sales API
     def get_sales_report_by_product(self, startdate=None, enddate=None, **kwargs):
@@ -229,7 +229,7 @@ class Client:
     #Data API
     
     
-    def _init_api_clients(self, base_url, result_service, overrides):
+    def _init_api_clients(self, result_service, overrides):
         for p,s in self._client_settings.iteritems():
-            setattr(self, p, overrides.get(s[0], s[1](base_url, result_service)))
+            setattr(self, p, overrides.get(s[0], s[1](result_service)))
     
