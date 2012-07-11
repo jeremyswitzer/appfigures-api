@@ -2,6 +2,7 @@ import sales
 from reviews import ReviewsClient
 from events import EventsClient
 from ranks import RanksClient
+from iads import iAdsClient, IADS_BY_DAY, IADS_BY_COUNTRY
 from services import create_default_result_service as create_rs
 
 
@@ -22,7 +23,8 @@ class Client:
         '_sales': ('sales_client', sales.SalesClient),
         '_reviews': ('reviews_client', ReviewsClient),
         '_events': ('events_client', EventsClient),
-        '_ranks': ('ranks_client', RanksClient)
+        '_ranks': ('ranks_client', RanksClient),
+        '_iads': ('iads_client', iAdsClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -223,6 +225,31 @@ class Client:
         return self._ranks.get_ranks(products, DATASOURCE_DAILY, startdate, enddate, **kwargs)
     
     #iAds API
+    def get_iads_by_day(self, startdate, enddate, **kwargs):
+        """Get detail iAds data grouped by day.
+        
+        Args:
+            startdate -- Date object. Report start date. 
+            enddate -- Date object. Report end date. 
+            
+        Keyword arguments:
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+        """
+        
+        return self._iads.get_iads(IADS_BY_DAY, startdate, enddate, **kwargs)
+    
+    def get_iads_by_country(self, startdate, enddate, **kwargs):
+        """Get detail iAds data grouped by country.
+        
+        Args:
+            startdate -- Date object. Report start date. 
+            enddate -- Date object. Report end date. 
+            
+        Keyword arguments:
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+        """
+        return self._iads.get_iads(IADS_BY_COUNTRY, startdate, enddate, **kwargs)
+    
     #Archive API
     #Users API
     #External Accounts API

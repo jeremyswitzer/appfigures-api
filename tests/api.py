@@ -15,7 +15,8 @@ class ApiClientTest(unittest.TestCase):
             "sales_client": cm,
             "reviews_client": cm,
             "events_client": cm,
-            "ranks_client": cm
+            "ranks_client": cm,
+            "iads_client": cm
         }
         self.api_client = Client("test", "test", **self.client_overrides)
         self.result_dict = { "Success": True }
@@ -178,7 +179,28 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_ranks.assert_called_once_with(self.mock_list, datasource, 
                                                            self.startdate, self.enddate)
         
-
+    def test_get_iads_by_day(self):
+        from appfigures.iads import IADS_BY_DAY as report_type
+        
+        self.client_mock.get_iads.return_value = self.result_dict
+        
+        result = self.api_client.get_iads_by_day(self.startdate, self.enddate, 
+                                                 products=self.mock_list)
+        
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_iads.assert_called_once_with(report_type, self.startdate, 
+                                                          self.enddate, products=self.mock_list)
+        
+    def test_get_iads_by_country(self):
+        from appfigures.iads import IADS_BY_COUNTRY as report_type
+        
+        self.client_mock.get_iads.return_value = self.result_dict
+        
+        result = self.api_client.get_iads_by_country(self.startdate, self.enddate)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_iads.assert_called_once_with(report_type, self.startdate, self.enddate)
+        
+    
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
