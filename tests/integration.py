@@ -35,7 +35,7 @@ class LocalIntegrationTest(unittest.TestCase):
         
         report = self.client.get_sales_report_by_product(self.startdate, self.enddate, 
                                                          data_source=api.DATASOURCE_DAILY, 
-                                                         product_ids=self.products, country=self.usa)
+                                                         products=self.products, country=self.usa)
         
         expected_url = "{0}/{1}/{2}/{3}/{4}".format(api.PODIO_API_URL_1_1, 
                                                     sales.SALES_BASE_URI, 
@@ -45,7 +45,7 @@ class LocalIntegrationTest(unittest.TestCase):
         
         expected_params = { 
             "dataSource": api.DATASOURCE_DAILY, 
-            "productIds": ';'.join(str(i) for i in self.products),
+            "products": ';'.join(str(i) for i in self.products),
             "country": self.usa
         }
         

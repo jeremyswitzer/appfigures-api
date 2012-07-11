@@ -39,7 +39,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthy) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -55,7 +55,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -71,7 +71,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -87,7 +87,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -103,7 +103,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -119,7 +119,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
@@ -135,7 +135,7 @@ class Client:
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
-            product_ids -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
+            products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
