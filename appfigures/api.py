@@ -4,6 +4,7 @@ from events import EventsClient
 from ranks import RanksClient
 from iads import iAdsClient, IADS_BY_DAY, IADS_BY_COUNTRY
 from users import UsersClient, USERS_PRODUCTS, USERS_EXTERNAL_ACCOUNTS
+from external_accounts import ExternalAccountsClient
 from services import create_default_result_service as create_rs
 
 
@@ -26,7 +27,8 @@ class Client:
         '_events': ('events_client', EventsClient),
         '_ranks': ('ranks_client', RanksClient),
         '_iads': ('iads_client', iAdsClient),
-        '_users': ('users_client', UsersClient)
+        '_users': ('users_client', UsersClient),
+        '_external_accounts': ('external_accounts_client', ExternalAccountsClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -280,6 +282,57 @@ class Client:
     
     
     #External Accounts API
+    def get_all_external_accounts(self):
+        """List existing external accounts."""
+        
+        return self._external_accounts.get_external_account()
+    
+    def get_external_account(self, account_id):
+        """Get a single external account by account ID.
+        
+        Args:
+            account_id -- Number. The ID of the external account.
+        """
+        return self._external_accounts.get_external_account(account_id)
+    
+    def create_external_account(self, nickname, username, 
+                                password, auto_import, account_type):
+        """Create a new external account.
+        
+        Args:
+            nickname -- String. A friendly name for the account.
+            username -- String. The username associated with the App Store.
+            password -- String. The password for the App Store account.
+            auto_import -- Boolean. Flag to have this account import reports automatically.
+            account_type -- String. The type of account being linked. Options: itunes_connect, android_market, google_checkout     
+        """
+        return self._external_accounts.create_external_account(nickname, username, 
+                                                               password, auto_import, account_type)
+    
+    def update_external_account(self, account_id, nickname, username, 
+                                password, auto_import, account_type):
+        """Update and existing external account.
+        
+        Args:
+            account_id -- Number. The ID of the external account.
+            nickname -- String. A friendly name for the account.
+            username -- String. The username associated with the App Store.
+            password -- String. The password for the App Store account.
+            auto_import -- Boolean. Flag to have this account import reports automatically.
+            account_type -- String. The type of account being linked. Options: itunes_connect, android_market, google_checkout     
+        """
+        return self._external_accounts.update_external_account(account_id, nickname, username, 
+                                                               password, auto_import, account_type)
+    
+    def delete_external_account(self, account_id):
+        """Delete an external account reference.
+        
+        Args:
+            account_id -- Number. The ID of the external account.
+        """
+        return self._external_accounts.delete_external_account(account_id)
+    
+    
     #Data API
     #Archive API
     

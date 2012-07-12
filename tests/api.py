@@ -17,7 +17,8 @@ class ApiClientTest(unittest.TestCase):
             "events_client": cm,
             "ranks_client": cm,
             "iads_client": cm,
-            "users_client": cm
+            "users_client": cm,
+            "external_accounts_client": cm
         }
         self.api_client = Client("test", "test", **self.client_overrides)
         self.result_dict = { "Success": True }
@@ -27,6 +28,8 @@ class ApiClientTest(unittest.TestCase):
         self.mock_string = "Test String"
         self.mock_list = [11111, 22222, 33333]
         self.email = u"testing@appfigures.com"
+        self.password = "abc123"
+        self.flag = True
 
     def test_get_sales_report_by_product(self):
         from appfigures.sales import SALES_BY_PRODUCT as datasource
@@ -226,9 +229,50 @@ class ApiClientTest(unittest.TestCase):
         
         result = self.api_client.get_user_external_accounts(self.email)
         self.assertDictEqual(result, self.result_dict)
-        self.client_mock.get_user_info.assert_called_once_with(self.email, info_type)      
-    
+        self.client_mock.get_user_info.assert_called_once_with(self.email, info_type)
+        
+    def test_get_all_external_accounts(self):
+        self.client_mock.get_external_account.return_value = self.result_dict
+        
+        result = self.api_client.get_all_external_accounts()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_external_account.assert_called_once_with()
+        
+    def test_get_external_account(self):
+        self.client_mock.get_external_account.return_value = self.result_dict
+        
+        result = self.api_client.get_external_account(self.mock_id)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_external_account.assert_called_once_with(self.mock_id)
+        
+    def test_create_external_account(self):
+        from appfigures.external_accounts import ITUNES_CONNECT as account_type
+        
+        self.client_mock.create_external_account.return_value = self.result_dict
+        args = (self.mock_string, self.email, self.password, self.flag, account_type)
+        
+        result = self.api_client.create_external_account(*args)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.create_external_account.assert_called_once_with(*args)
+        
+    def test_update_external_account(self):
+        from appfigures.external_accounts import ANDROID_MARKET as account_type
 
+        self.client_mock.update_external_account.return_value = self.result_dict
+        args = (self.mock_id, self.mock_string, self.email, self.password, self.flag, account_type)
+        
+        result = self.api_client.update_external_account(*args)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.update_external_account.assert_called_once_with(*args)
+        
+    def test_delete_external_account(self):
+        self.client_mock.delete_external_account.return_value = self.result_dict
+        
+        result = self.api_client.delete_external_account(self.mock_id)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.delete_external_account.assert_called_once_with(self.mock_id)
+        
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
