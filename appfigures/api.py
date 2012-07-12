@@ -3,6 +3,7 @@ from reviews import ReviewsClient
 from events import EventsClient
 from ranks import RanksClient
 from iads import iAdsClient, IADS_BY_DAY, IADS_BY_COUNTRY
+from users import UsersClient, USERS_PRODUCTS, USERS_EXTERNAL_ACCOUNTS
 from services import create_default_result_service as create_rs
 
 
@@ -24,7 +25,8 @@ class Client:
         '_reviews': ('reviews_client', ReviewsClient),
         '_events': ('events_client', EventsClient),
         '_ranks': ('ranks_client', RanksClient),
-        '_iads': ('iads_client', iAdsClient)
+        '_iads': ('iads_client', iAdsClient),
+        '_users': ('users_client', UsersClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -250,10 +252,36 @@ class Client:
         """
         return self._iads.get_iads(IADS_BY_COUNTRY, startdate, enddate, **kwargs)
     
-    #Archive API
+    
     #Users API
+    def get_user_details(self, email):
+        """Get details for a user.
+        
+        Args:
+            email -- String. The users email address. 
+        """
+        return self._users.get_user_info(email)
+    
+    def get_user_products(self, email):
+        """Get a list of the user's products.
+        
+        Args:
+            email -- String. The user's email address. 
+        """
+        return self._users.get_user_info(email, USERS_PRODUCTS)
+    
+    def get_user_external_accounts(self, email):
+        """Get a list of the user's external accounts.
+        
+        Args:
+            email -- String. The user's email address. 
+        """
+        return self._users.get_user_info(email, USERS_EXTERNAL_ACCOUNTS)
+    
+    
     #External Accounts API
     #Data API
+    #Archive API
     
     
     def _init_api_clients(self, result_service, overrides):

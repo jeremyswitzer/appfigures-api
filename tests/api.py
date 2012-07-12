@@ -16,7 +16,8 @@ class ApiClientTest(unittest.TestCase):
             "reviews_client": cm,
             "events_client": cm,
             "ranks_client": cm,
-            "iads_client": cm
+            "iads_client": cm,
+            "users_client": cm
         }
         self.api_client = Client("test", "test", **self.client_overrides)
         self.result_dict = { "Success": True }
@@ -25,6 +26,7 @@ class ApiClientTest(unittest.TestCase):
         self.mock_id = 111111
         self.mock_string = "Test String"
         self.mock_list = [11111, 22222, 33333]
+        self.email = u"testing@appfigures.com"
 
     def test_get_sales_report_by_product(self):
         from appfigures.sales import SALES_BY_PRODUCT as datasource
@@ -200,6 +202,31 @@ class ApiClientTest(unittest.TestCase):
         self.assertDictEqual(result, self.result_dict)
         self.client_mock.get_iads.assert_called_once_with(report_type, self.startdate, self.enddate)
         
+        
+    def test_get_user_details(self):
+        self.client_mock.get_user_info.return_value = self.result_dict
+        
+        result = self.api_client.get_user_details(self.email)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_user_info.assert_called_once_with(self.email)
+        
+    def test_get_user_products(self):
+        from appfigures.users import USERS_PRODUCTS as info_type
+        
+        self.client_mock.get_user_info.return_value = self.result_dict
+        
+        result = self.api_client.get_user_products(self.email)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_user_info.assert_called_once_with(self.email, info_type)
+        
+    def test_get_user_external_accounts(self):
+        from appfigures.users import USERS_EXTERNAL_ACCOUNTS as info_type
+        
+        self.client_mock.get_user_info.return_value = self.result_dict
+        
+        result = self.api_client.get_user_external_accounts(self.email)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_user_info.assert_called_once_with(self.email, info_type)      
     
 
 if __name__ == "__main__":
