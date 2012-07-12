@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 '''The setup and build script for the appfigures library.'''
 
 __author__ = 'jeremy.switzer@gmail.com'
-__version__ = '0.6dev'
+__version__ = '0.7dev'
 
 setup(
   name = "appfigures",
