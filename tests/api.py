@@ -18,7 +18,8 @@ class ApiClientTest(unittest.TestCase):
             "ranks_client": cm,
             "iads_client": cm,
             "users_client": cm,
-            "external_accounts_client": cm
+            "external_accounts_client": cm,
+            "data_client": cm
         }
         self.api_client = Client("test", "test", **self.client_overrides)
         self.result_dict = { "Success": True }
@@ -271,6 +272,51 @@ class ApiClientTest(unittest.TestCase):
         result = self.api_client.delete_external_account(self.mock_id)
         self.assertDictEqual(result, self.result_dict)
         self.client_mock.delete_external_account.assert_called_once_with(self.mock_id)
+        
+    def test_get_categories(self):
+        from appfigures.data import CATEGORIES_DATA as data_type
+        
+        self.client_mock.get_data.return_value = self.result_dict
+        
+        result = self.api_client.get_categories()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_data.assert_called_once_with(data_type)
+        
+    def test_get_currencies(self):
+        from appfigures.data import CURRENCIES_DATA as data_type
+        
+        self.client_mock.get_data.return_value = self.result_dict
+        
+        result = self.api_client.get_currencies()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_data.assert_called_once_with(data_type)
+        
+    def test_get_languages(self):
+        from appfigures.data import LANGUAGES_DATA as data_type
+        
+        self.client_mock.get_data.return_value = self.result_dict
+        
+        result = self.api_client.get_languages()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_data.assert_called_once_with(data_type)
+        
+    def test_get_countries(self):
+        from appfigures.data import COUNTRIES_DATA as data_type
+        
+        self.client_mock.get_data.return_value = self.result_dict
+        
+        result = self.api_client.get_countries()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_data.assert_called_once_with(data_type)
+        
+    def test_get_apple_stores(self):
+        from appfigures.data import APPLE_STORE_ID, COUNTRIES_DATA as data_type
+        
+        self.client_mock.get_data.return_value = self.result_dict
+        
+        result = self.api_client.get_apple_stores()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_data.assert_called_once_with(data_type, APPLE_STORE_ID)
         
         
 if __name__ == "__main__":

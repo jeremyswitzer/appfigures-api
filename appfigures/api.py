@@ -5,6 +5,8 @@ from ranks import RanksClient
 from iads import iAdsClient, IADS_BY_DAY, IADS_BY_COUNTRY
 from users import UsersClient, USERS_PRODUCTS, USERS_EXTERNAL_ACCOUNTS
 from external_accounts import ExternalAccountsClient
+from data import DataClient, CATEGORIES_DATA, COUNTRIES_DATA, CURRENCIES_DATA, \
+                 LANGUAGES_DATA, APPLE_STORE_ID
 from services import create_default_result_service as create_rs
 
 
@@ -28,7 +30,8 @@ class Client:
         '_ranks': ('ranks_client', RanksClient),
         '_iads': ('iads_client', iAdsClient),
         '_users': ('users_client', UsersClient),
-        '_external_accounts': ('external_accounts_client', ExternalAccountsClient)
+        '_external_accounts': ('external_accounts_client', ExternalAccountsClient),
+        '_data': ('data_client', DataClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -334,6 +337,27 @@ class Client:
     
     
     #Data API
+    def get_categories(self):
+        """List all App Store categories."""
+        return self._data.get_data(CATEGORIES_DATA)
+    
+    def get_languages(self):
+        """Listing supported languages for review translation."""
+        return self._data.get_data(LANGUAGES_DATA)
+    
+    def get_currencies(self):
+        """Listing supported currencies. Returns a list."""
+        return self._data.get_data(CURRENCIES_DATA)
+    
+    def get_countries(self):
+        """Listing available countries. Returns dict keyed by ISO."""
+        return self._data.get_data(COUNTRIES_DATA)
+    
+    def get_apple_stores(self):
+        """Listing available Apple App Stores. Returns dict keyed by Apple's identifier."""
+        return self._data.get_data(COUNTRIES_DATA, APPLE_STORE_ID)
+    
+    
     #Archive API
     
     
