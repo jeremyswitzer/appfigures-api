@@ -19,7 +19,8 @@ class ApiClientTest(unittest.TestCase):
             "iads_client": cm,
             "users_client": cm,
             "external_accounts_client": cm,
-            "data_client": cm
+            "data_client": cm,
+            "archive_client": cm
         }
         self.api_client = Client("test", "test", **self.client_overrides)
         self.result_dict = { "Success": True }
@@ -317,6 +318,36 @@ class ApiClientTest(unittest.TestCase):
         result = self.api_client.get_apple_stores()
         self.assertDictEqual(result, self.result_dict)
         self.client_mock.get_data.assert_called_once_with(data_type, APPLE_STORE_ID)
+        
+        
+    def test_get_all_archived_reports(self):
+        from appfigures.archive import ALL_REPORT_TYPE as report_type, \
+                                       ALL_ARCHIVE_REPORTS as scope
+        
+        self.client_mock.get_archive.return_value = self.result_dict
+        
+        result = self.api_client.get_all_archived_reports()
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_archive.assert_called_once_with(scope, report_type)
+        
+    def test_get_latest_archived_reports(self):
+        from appfigures.archive import WEEKLY_REPORT_TYPE as report_type, \
+                                       LATEST_ARCHIVE_REPORTS as scope
+        
+        self.client_mock.get_archive.return_value = self.result_dict
+        
+        result = self.api_client.get_latest_archived_reports(report_type)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_archive.assert_called_once_with(scope, report_type)
+        
+    def test_get_archived_reports_for_date(self):
+        from appfigures.archive import FINANCIAL_REPORT_TYPE as report_type
+        
+        self.client_mock.get_archive.return_value = self.result_dict
+        
+        result = self.api_client.get_archived_reports_for_date(self.startdate, report_type)
+        self.assertDictEqual(result, self.result_dict)
+        self.client_mock.get_archive.assert_called_once_with(self.startdate, report_type)
         
         
 if __name__ == "__main__":

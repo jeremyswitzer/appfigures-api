@@ -7,6 +7,8 @@ from users import UsersClient, USERS_PRODUCTS, USERS_EXTERNAL_ACCOUNTS
 from external_accounts import ExternalAccountsClient
 from data import DataClient, CATEGORIES_DATA, COUNTRIES_DATA, CURRENCIES_DATA, \
                  LANGUAGES_DATA, APPLE_STORE_ID
+from archive import ArchiveClient, LATEST_ARCHIVE_REPORTS, ALL_ARCHIVE_REPORTS, \
+                    ALL_REPORT_TYPE
 from services import create_default_result_service as create_rs
 
 
@@ -31,7 +33,8 @@ class Client:
         '_iads': ('iads_client', iAdsClient),
         '_users': ('users_client', UsersClient),
         '_external_accounts': ('external_accounts_client', ExternalAccountsClient),
-        '_data': ('data_client', DataClient)
+        '_data': ('data_client', DataClient),
+        '_archive': ('archive_client', ArchiveClient)
     }
     
     def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
@@ -359,6 +362,33 @@ class Client:
     
     
     #Archive API
+    def get_all_archived_reports(self, report_type=ALL_REPORT_TYPE):
+        """Get all archived reports. At this time reports are 
+        only available for Apple apps (via iTunes Connect).
+        
+        Args:
+            report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
+        """
+        return self._archive.get_archive(ALL_ARCHIVE_REPORTS, report_type)
+    
+    def get_latest_archived_reports(self, report_type=ALL_REPORT_TYPE):
+        """Get latest archived reports. At this time reports are 
+        only available for Apple apps (via iTunes Connect).
+        
+        Args:
+            report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
+        """
+        return self._archive.get_archive(LATEST_ARCHIVE_REPORTS, report_type)
+    
+    def get_archived_reports_for_date(self, report_date, report_type=ALL_REPORT_TYPE):
+        """Get archived report by date. At this time reports are 
+        only available for Apple apps (via iTunes Connect).
+        
+        Args:
+            report_date: Date. Retrieves the headers for all reports on the given date.
+            report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
+        """
+        return self._archive.get_archive(report_date, report_type)
     
     
     def _init_api_clients(self, result_service, overrides):
