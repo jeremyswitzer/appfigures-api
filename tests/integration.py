@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from appfigures import api, sales, events
+from appfigures import api, sales, events, data
 from appfigures.services import ResultService
 from appfigures.transport import HttpResponse
 from datetime import date
@@ -100,6 +100,26 @@ class LocalIntegrationTest(unittest.TestCase):
         self.assertDictEqual(result, self.return_dict)
         self.requester.delete.assert_called_once_with(expected_url)
         
+    def test_get_json_array_and_return_list(self):
+        
+        self.response.text = '''[ { "Success": true, "Failure": false },
+                                { "Success": 1, "Failure": 0 } ]'''
+        
+        self.requester.get.return_value = self.return_response
+        
+        return_list = [
+            { "Success": True, "Failure": False },
+            { "Success": 1, "Failure": 0 }
+        ]
+        
+        result = self.client.get_currencies()
+        
+        expected_url = "{0}/{1}/{2}".format(api.PODIO_API_URL_1_1, 
+                                            data.DATA_BASE_URI, 
+                                            data.CURRENCIES_DATA)
+        
+        self.assertListEqual(result, return_list)
+        self.requester.get.assert_called_once_with(expected_url, None)
 
 def create_closed_result_service(requester, base_url):
     from appfigures.serialization import JsonSerializer

@@ -6,6 +6,8 @@ except ImportError:
 from datetime import date
 from types import ListType
 
+from decorators import none_check
+
 class JsonSerializer:
     
     def deserialize(self, json_string):
@@ -17,10 +19,12 @@ class JsonSerializer:
     def serialize_args(self, args):
         return (self._to_string(a) for a in args)
     
+    @none_check
     def serialize_params(self, params):
         ts,u2c = self._to_string,self._underscore_to_camelcase
         return dict([(u2c(k), ts(v)) for k,v in params.items()])
     
+    @none_check
     def serialize_date(self, date_obj):
         if isinstance(date_obj, date):
             return date_obj.isoformat()

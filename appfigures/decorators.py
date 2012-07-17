@@ -7,3 +7,9 @@ def exception_check(fn):
             raise ex, ex(result["message"], result["additional"], result["reference"]), sys.exc_info()[2]
         return result
     return wrapper
+
+def none_check(fn):
+    def wrapper(self, *args, **kwargs):
+        return fn(self, *args, **kwargs) if all(args) else None
+    return wrapper        
+    
