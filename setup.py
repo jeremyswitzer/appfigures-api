@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 '''The setup and build script for the appfigures library.'''
 
 __author__ = 'jeremy.switzer@gmail.com'
-__version__ = '0.7dev'
+__version__ = '0.8dev'
 
 setup(
   name = "appfigures",
@@ -12,7 +12,7 @@ setup(
   description='A Python wrapper around the AppFigures API',
   license='MIT',
   url='https://github.com/jeremyswitzer/appfigures-api',
-  keywords='podio',
+  keywords='appfigures',
   packages= find_packages(),
   install_requires = ['requests'],
   test_requires = ['mock'],
