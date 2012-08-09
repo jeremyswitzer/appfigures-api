@@ -46,8 +46,8 @@ class Client:
         """Get sales report grouped by product. Returns a dict with product numbers as keys.
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthy) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -62,8 +62,8 @@ class Client:
         """Get sales report grouped by date. Returns a dict with date strings as keys.
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -78,8 +78,8 @@ class Client:
         """Get sales report grouped by country. Returns a dict with country names as keys.
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -94,8 +94,8 @@ class Client:
         """Get sales report grouped by product then date. Returns a dict with product numbers as keys. Each product has a dict with date strings as keys
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -110,8 +110,8 @@ class Client:
         """Get sales report grouped by date then product. Returns a dict with date strings as keys. Each product has a dict with product numbers as keys
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -126,8 +126,8 @@ class Client:
         """Get sales report grouped by product then country. Returns a dict with product numbers as keys. Each product has a dict with country names as keys
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -142,8 +142,8 @@ class Client:
         """Get sales report grouped by country then product. Returns a dict with country names as keys. Each product has a dict with product numbers as keys
         
         Args:
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format. Will also accept "today," "tomorrow," "yesterday," etc. 
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date. 
             
         Keyword arguments:
             data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
@@ -181,7 +181,7 @@ class Client:
         
         Args:
             caption -- String. The caption of the event.
-            event_date -- Date object or string in "yyyy-MM-dd" format. Date for the event
+            event_date -- Date object. Date for the event
             products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
         """
         return self._events.create_event(caption, event_date, products)
@@ -192,7 +192,7 @@ class Client:
         Args:
             event_id -- Number. The Id of the event to update.
             caption -- String. The caption of the event.
-            event_date -- Date object or string in "yyyy-MM-dd" format. Date for the event
+            event_date -- Date object. Date for the event
             products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
         """
         return self._events.update_event(event_id, caption, event_date, products)
