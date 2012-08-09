@@ -211,8 +211,8 @@ class Client:
         
         Args:
             products -- List. The product ID(s) to get ranks data for.
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format.            
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date.          
         Keyword arguments:
             countries (optional) -- List of countryId or isoCode. Countries to run report on. (default: US)
             tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
@@ -225,8 +225,8 @@ class Client:
         
         Args:
             products -- List. The product ID(s) to get ranks data for.
-            startdate -- Report start date. Date object or string in "yyyy-MM-dd" format.
-            enddate -- Report end date. Date object or string in "yyyy-MM-dd" format.            
+            startdate -- Date object. Report start date.
+            enddate -- Date object. Report end date.          
         Keyword arguments:
             countries (optional) -- List of countryId or isoCode. Countries to run report on. (default: US)
             tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
@@ -385,7 +385,7 @@ class Client:
         only available for Apple apps (via iTunes Connect).
         
         Args:
-            report_date: Date. Retrieves the headers for all reports on the given date.
+            report_date: Date object. Retrieves the headers for all reports on the given date.
             report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
         """
         return self._archive.get_archive(report_date, report_type)
