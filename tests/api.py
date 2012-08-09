@@ -28,6 +28,7 @@ class ApiClientTest(unittest.TestCase):
         self.enddate = date(2012, 2, 2)
         self.mock_id = 111111
         self.mock_string = "Test String"
+        self.long_string = "Long Test String"
         self.mock_list = [11111, 22222, 33333]
         self.email = u"testing@appfigures.com"
         self.password = "abc123"
@@ -138,23 +139,27 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.create_event.return_value = self.result_dict
         
         result = self.api_client.create_new_event(self.mock_string, 
-                                                  self.startdate, 
+                                                  self.startdate,
+                                                  self.long_string,
                                                   self.mock_list)
         
         self.assertDictEqual(result, self.result_dict)
         self.client_mock.create_event.assert_called_once_with(self.mock_string, 
-                                                              self.startdate, 
+                                                              self.startdate,
+                                                              self.long_string,
                                                               self.mock_list)
         
     def test_update_event(self):
         self.client_mock.update_event.return_value = self.result_dict
         
         result = self.api_client.update_event(self.mock_id, self.mock_string, 
-                                              self.startdate, self.mock_list)
+                                              self.startdate, self.long_string, 
+                                              self.mock_list)
         
         self.assertDictEqual(result, self.result_dict)
         self.client_mock.update_event.assert_called_once_with(self.mock_id, self.mock_string, 
-                                                              self.startdate, self.mock_list)
+                                                              self.startdate, self.long_string, 
+                                                              self.mock_list)
         
     
     def test_delete_event(self):

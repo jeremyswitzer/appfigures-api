@@ -21,6 +21,7 @@ class LocalIntegrationTest(unittest.TestCase):
         self.products = [10000, 20000, 30000]
         self.event_id = 111111
         self.caption = "Test Caption"
+        self.details = "Test Details"
         self.usa = "US"
         self.response = MagicMock()
         self.response.text = '{ "Success": true }'
@@ -56,12 +57,14 @@ class LocalIntegrationTest(unittest.TestCase):
     def test_create_new_event(self):
         self.requester.post.return_value = self.return_response
         
-        event = self.client.create_new_event(self.caption, self.startdate, self.products)
+        event = self.client.create_new_event(self.caption, self.startdate, 
+                                             self.details, self.products)
         
         expected_url = "{0}/{1}".format(api.PODIO_API_URL_1_1, events.EVENTS_BASE_URI)
         expected_params = json.dumps({
             "caption": self.caption,
             "date": self.startdate.isoformat(),
+            "details": self.details,
             "products": self.products
         })
         
@@ -73,7 +76,8 @@ class LocalIntegrationTest(unittest.TestCase):
         self.requester.put.return_value = self.return_response
         
         event = self.client.update_event(self.event_id, self.caption, 
-                                         self.startdate, self.products)
+                                         self.startdate, self.details,
+                                         self.products)
         
         expected_url = "{0}/{1}/{2}".format(api.PODIO_API_URL_1_1, 
                                             events.EVENTS_BASE_URI, 
@@ -81,6 +85,7 @@ class LocalIntegrationTest(unittest.TestCase):
         expected_body = json.dumps({
             "caption": self.caption,
             "date": self.startdate.isoformat(),
+            "details": self.details,
             "products": self.products
         })
         

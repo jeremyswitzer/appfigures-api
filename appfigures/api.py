@@ -176,26 +176,28 @@ class Client:
         
         return self._events.get_events()
     
-    def create_new_event(self, caption, event_date, products):
+    def create_new_event(self, caption, event_date, details, products):
         """Create a new event. The call returns the newly created event object.
         
         Args:
             caption -- String. The caption of the event.
-            event_date -- Date object. Date for the event
+            event_date -- Date object. Date for the event.
+            details -- String. Description of the event. (Undocumented)
             products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
         """
-        return self._events.create_event(caption, event_date, products)
+        return self._events.create_event(caption, event_date, details, products)
     
-    def update_event(self, event_id, caption, event_date, products):
+    def update_event(self, event_id, caption, event_date, details, products):
         """Update info for an existing event. The call returns the updated event object
         
         Args:
             event_id -- Number. The Id of the event to update.
             caption -- String. The caption of the event.
-            event_date -- Date object. Date for the event
+            event_date -- Date object. Date for the event.
+            details -- String. Description of the event. (Undocumented)
             products -- List. Product Id(s) related to the event. The constant ALL_PRODUCTS will assume all products related to the account.
         """
-        return self._events.update_event(event_id, caption, event_date, products)
+        return self._events.update_event(event_id, caption, event_date, details, products)
     
     def delete_event(self, event_id):
         """Delete an existing event.
