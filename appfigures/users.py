@@ -1,8 +1,8 @@
 from base import BaseClient
 
 USERS_BASE_URI = "users"
-USERS_PRODUCTS = "products"
-USERS_EXTERNAL_ACCOUNTS = "external_accounts"
+PRODUCTS_COLLECTION = "products"
+EXTERNAL_ACCOUNTS_COLLECTION = "external_accounts"
 
 class UsersClient(BaseClient):
     

@@ -1,13 +1,8 @@
 from base import BaseClient
 
 ARCHIVE_BASE_URI = "archive"
-LATEST_ARCHIVE_REPORTS = "latest"
-ALL_ARCHIVE_REPORTS = None
-DAILY_REPORT_TYPE = "daily"
-WEEKLY_REPORT_TYPE = "weekly"
-FINANCIAL_REPORT_TYPE = "financial"
-PAYMENT_REPORT_TYPE = "payment"
-ALL_REPORT_TYPE = "all"
+ALL_REPORTS = None
+LATEST_REPORTS = "latest"
 
 class ArchiveClient(BaseClient):
 

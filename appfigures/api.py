@@ -1,32 +1,21 @@
-import sales
+import constants as const
+
+from sales import SalesClient
 from reviews import ReviewsClient
 from events import EventsClient
 from ranks import RanksClient
-from iads import iAdsClient, IADS_BY_DAY, IADS_BY_COUNTRY
-from users import UsersClient, USERS_PRODUCTS, USERS_EXTERNAL_ACCOUNTS
+from iads import iAdsClient
+from users import UsersClient
 from external_accounts import ExternalAccountsClient
-from data import DataClient, CATEGORIES_DATA, COUNTRIES_DATA, CURRENCIES_DATA, \
-                 LANGUAGES_DATA, APPLE_STORE_ID
-from archive import ArchiveClient, LATEST_ARCHIVE_REPORTS, ALL_ARCHIVE_REPORTS, \
-                    ALL_REPORT_TYPE
+from data import DataClient
+from archive import ArchiveClient
 from services import create_default_result_service as create_rs
 
-
-PODIO_API_URL_1_1 = "https://api.appfigures.com/v1.1"
-
-DATASOURCE_HOURLY = "hourly"
-DATASOURCE_DAILY = "daily"
-DATASOURCE_WEEKLY = "weekly"
-DATASOURCE_MONTHLY = "monthly"
-
-TIMEZONE_USER = "user"
-TIMEZONE_UTC = "utc"
-TIMEZONE_EST = "est"
 
 class Client:
     
     _client_settings = {
-        '_sales': ('sales_client', sales.SalesClient),
+        '_sales': ('sales_client', SalesClient),
         '_reviews': ('reviews_client', ReviewsClient),
         '_events': ('events_client', EventsClient),
         '_ranks': ('ranks_client', RanksClient),
@@ -37,7 +26,7 @@ class Client:
         '_archive': ('archive_client', ArchiveClient)
     }
     
-    def __init__(self, user, password, base_url=PODIO_API_URL_1_1, **kwargs):
+    def __init__(self, user, password, base_url=const.PODIO_API_URL_1_1, **kwargs):
         result_service = kwargs.get("result_service", create_rs(user, password, base_url))
         self._init_api_clients(result_service, kwargs)
     
@@ -50,13 +39,13 @@ class Client:
             enddate -- Date object. Report end date. 
             
         Keyword arguments:
-            data_source -- (daily,weekly,monthy) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
+            data_source -- (daily,weekly,monthly) Whether to use daily or weekly reports. Monthly used for financial reports. (default: daily)
             products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
             country -- (isoCode) Country to limit the report to.
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_PRODUCT, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_PRODUCT, startdate, enddate, **kwargs)
     
     def get_sales_report_by_date(self, startdate=None, enddate=None, **kwargs):
         """Get sales report grouped by date. Returns a dict with date strings as keys.
@@ -72,7 +61,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_DATE, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_DATE, startdate, enddate, **kwargs)
     
     def get_sales_report_by_country(self, startdate=None, enddate=None, **kwargs):  
         """Get sales report grouped by country. Returns a dict with country names as keys.
@@ -88,7 +77,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_COUNTRY, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_COUNTRY, startdate, enddate, **kwargs)
     
     def get_sales_report_by_product_and_date(self, startdate=None, enddate=None, **kwargs):
         """Get sales report grouped by product then date. Returns a dict with product numbers as keys. Each product has a dict with date strings as keys
@@ -104,7 +93,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_PRODUCT_AND_DATE, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_PRODUCT_AND_DATE, startdate, enddate, **kwargs)
     
     def get_sales_report_by_date_and_product(self, startdate=None, enddate=None, **kwargs):
         """Get sales report grouped by date then product. Returns a dict with date strings as keys. Each product has a dict with product numbers as keys
@@ -120,7 +109,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_DATE_AND_PRODUCT, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_DATE_AND_PRODUCT, startdate, enddate, **kwargs)
     
     def get_sales_report_by_product_and_country(self, startdate=None, enddate=None, **kwargs):
         """Get sales report grouped by product then country. Returns a dict with product numbers as keys. Each product has a dict with country names as keys
@@ -136,7 +125,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_PRODUCT_AND_COUNTRY, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_PRODUCT_AND_COUNTRY, startdate, enddate, **kwargs)
 
     def get_sales_report_by_country_and_product(self, startdate=None, enddate=None, **kwargs):
         """Get sales report grouped by country then product. Returns a dict with country names as keys. Each product has a dict with product numbers as keys
@@ -152,7 +141,7 @@ class Client:
         
         """
         
-        return self._sales.get_sales_report(sales.SALES_BY_COUNTRY_AND_PRODUCT, startdate, enddate, **kwargs)
+        return self._sales.get_sales_report(const.REPORT_BY_COUNTRY_AND_PRODUCT, startdate, enddate, **kwargs)
     
     #Reviews API
     def get_reviews_for_product_by_page(self, product_id, page, countries='major', **kwargs):
@@ -220,7 +209,7 @@ class Client:
             tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
             filter (optional) -- Number (1 - 400). Top N ranks. A filter value of 100 will only show records where the rank position is better than 100. (default: 100)
         """
-        return self._ranks.get_ranks(products, DATASOURCE_HOURLY, startdate, enddate, **kwargs)
+        return self._ranks.get_ranks(products, const.REPORT_TYPE_HOURLY, startdate, enddate, **kwargs)
     
     def get_daily_ranks(self, products, startdate, enddate, **kwargs):
         """Generate a Ranks Report by the day.
@@ -234,7 +223,7 @@ class Client:
             tz (optional) -- String. (user | utc | est) specifies which timezone to use. (default: est)
             filter (optional) -- Number (1 - 400). Top N ranks. A filter value of 100 will only show records where the rank position is better than 100. (default: 100)
         """
-        return self._ranks.get_ranks(products, DATASOURCE_DAILY, startdate, enddate, **kwargs)
+        return self._ranks.get_ranks(products, const.REPORT_TYPE_DAILY, startdate, enddate, **kwargs)
     
     #iAds API
     def get_iads_by_day(self, startdate, enddate, **kwargs):
@@ -248,7 +237,7 @@ class Client:
             products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
         """
         
-        return self._iads.get_iads(IADS_BY_DAY, startdate, enddate, **kwargs)
+        return self._iads.get_iads(const.REPORT_BY_DATE, startdate, enddate, **kwargs)
     
     def get_iads_by_country(self, startdate, enddate, **kwargs):
         """Get detail iAds data grouped by country.
@@ -260,7 +249,7 @@ class Client:
         Keyword arguments:
             products -- [product_id1,product_id2,product_id3...] List of specific products to include in the response.
         """
-        return self._iads.get_iads(IADS_BY_COUNTRY, startdate, enddate, **kwargs)
+        return self._iads.get_iads(const.REPORT_BY_COUNTRY, startdate, enddate, **kwargs)
     
     
     #Users API
@@ -278,7 +267,7 @@ class Client:
         Args:
             email -- String. The user's email address. 
         """
-        return self._users.get_user_info(email, USERS_PRODUCTS)
+        return self._users.get_user_info(email, const.PRODUCTS_COLLECTION)
     
     def get_user_external_accounts(self, email):
         """Get a list of the user's external accounts.
@@ -286,7 +275,7 @@ class Client:
         Args:
             email -- String. The user's email address. 
         """
-        return self._users.get_user_info(email, USERS_EXTERNAL_ACCOUNTS)
+        return self._users.get_user_info(email, const.EXTERNAL_ACCOUNTS_COLLECTION)
     
     
     #External Accounts API
@@ -344,45 +333,45 @@ class Client:
     #Data API
     def get_categories(self):
         """List all App Store categories."""
-        return self._data.get_data(CATEGORIES_DATA)
+        return self._data.get_data(const.CATEGORIES_COLLECTION)
     
     def get_languages(self):
         """Listing supported languages for review translation."""
-        return self._data.get_data(LANGUAGES_DATA)
+        return self._data.get_data(const.LANGUAGES_COLLECTION)
     
     def get_currencies(self):
         """Listing supported currencies. Returns a list."""
-        return self._data.get_data(CURRENCIES_DATA)
+        return self._data.get_data(const.CURRENCIES_COLLECTION)
     
     def get_countries(self):
         """Listing available countries. Returns dict keyed by ISO."""
-        return self._data.get_data(COUNTRIES_DATA)
+        return self._data.get_data(const.COUNTRIES_COLLECTION)
     
     def get_apple_stores(self):
         """Listing available Apple App Stores. Returns dict keyed by Apple's identifier."""
-        return self._data.get_data(COUNTRIES_DATA, APPLE_STORE_ID)
+        return self._data.get_data(const.COUNTRIES_COLLECTION, const.APPLE_STORE_ID)
     
     
     #Archive API
-    def get_all_archived_reports(self, report_type=ALL_REPORT_TYPE):
+    def get_all_archived_reports(self, report_type=const.REPORT_TYPE_ALL):
         """Get all archived reports. At this time reports are 
         only available for Apple apps (via iTunes Connect).
         
         Args:
             report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
         """
-        return self._archive.get_archive(ALL_ARCHIVE_REPORTS, report_type)
+        return self._archive.get_archive(const.ALL_REPORTS, report_type)
     
-    def get_latest_archived_reports(self, report_type=ALL_REPORT_TYPE):
+    def get_latest_archived_reports(self, report_type=const.REPORT_TYPE_ALL):
         """Get latest archived reports. At this time reports are 
         only available for Apple apps (via iTunes Connect).
         
         Args:
             report_type: (Optional) String. The report type to limit to. Supported values: daily, weekly, financial, payment, all. The default type is all
         """
-        return self._archive.get_archive(LATEST_ARCHIVE_REPORTS, report_type)
+        return self._archive.get_archive(const.LATEST_REPORTS, report_type)
     
-    def get_archived_reports_for_date(self, report_date, report_type=ALL_REPORT_TYPE):
+    def get_archived_reports_for_date(self, report_date, report_type=const.REPORT_TYPE_ALL):
         """Get archived report by date. At this time reports are 
         only available for Apple apps (via iTunes Connect).
         

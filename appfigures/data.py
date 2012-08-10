@@ -2,10 +2,10 @@ from base import BaseClient
 
 DATA_BASE_URI = "data"
 
-CATEGORIES_DATA = "categories"
-COUNTRIES_DATA = "countries"
-LANGUAGES_DATA = "languages"
-CURRENCIES_DATA = "currencies"
+CATEGORIES_COLLECTION = "categories"
+COUNTRIES_COLLECTION = "countries"
+LANGUAGES_COLLECTION = "languages"
+CURRENCIES_COLLECTION = "currencies"
 
 APPLE_STORE_ID = "apple"
 

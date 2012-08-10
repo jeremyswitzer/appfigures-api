@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from appfigures import api, sales, events, data
+from appfigures import api, constants as c
 from appfigures.services import ResultService
 from appfigures.transport import HttpResponse
 from datetime import date
@@ -13,7 +13,7 @@ class LocalIntegrationTest(unittest.TestCase):
 
     def setUp(self):
         self.requester = MagicMock()
-        result_service = create_closed_result_service(self.requester, api.PODIO_API_URL_1_1)
+        result_service = create_closed_result_service(self.requester, c.PODIO_API_URL_1_1)
         self.client = api.Client("test", "test", result_service=result_service)
         
         self.startdate = date(2012, 1, 1)
@@ -35,17 +35,17 @@ class LocalIntegrationTest(unittest.TestCase):
         self.requester.get.return_value = self.return_response
         
         report = self.client.get_sales_report_by_product(self.startdate, self.enddate, 
-                                                         data_source=api.DATASOURCE_DAILY, 
+                                                         data_source=c.REPORT_TYPE_DAILY, 
                                                          products=self.products, country=self.usa)
         
-        expected_url = "{0}/{1}/{2}/{3}/{4}".format(api.PODIO_API_URL_1_1, 
-                                                    sales.SALES_BASE_URI, 
-                                                    sales.SALES_BY_PRODUCT, 
+        expected_url = "{0}/{1}/{2}/{3}/{4}".format(c.PODIO_API_URL_1_1, 
+                                                    c.SALES_BASE_URI, 
+                                                    c.REPORT_BY_PRODUCT, 
                                                     self.startdate.isoformat(), 
                                                     self.enddate.isoformat())
         
         expected_params = { 
-            "dataSource": api.DATASOURCE_DAILY, 
+            "dataSource": c.REPORT_TYPE_DAILY, 
             "products": ';'.join(str(i) for i in self.products),
             "country": self.usa
         }
@@ -60,7 +60,7 @@ class LocalIntegrationTest(unittest.TestCase):
         event = self.client.create_new_event(self.caption, self.startdate, 
                                              self.details, self.products)
         
-        expected_url = "{0}/{1}".format(api.PODIO_API_URL_1_1, events.EVENTS_BASE_URI)
+        expected_url = "{0}/{1}".format(c.PODIO_API_URL_1_1, c.EVENTS_BASE_URI)
         expected_params = json.dumps({
             "caption": self.caption,
             "date": self.startdate.isoformat(),
@@ -79,8 +79,8 @@ class LocalIntegrationTest(unittest.TestCase):
                                          self.startdate, self.details,
                                          self.products)
         
-        expected_url = "{0}/{1}/{2}".format(api.PODIO_API_URL_1_1, 
-                                            events.EVENTS_BASE_URI, 
+        expected_url = "{0}/{1}/{2}".format(c.PODIO_API_URL_1_1, 
+                                            c.EVENTS_BASE_URI, 
                                             self.event_id)
         expected_body = json.dumps({
             "caption": self.caption,
@@ -98,8 +98,8 @@ class LocalIntegrationTest(unittest.TestCase):
         
         result = self.client.delete_event(self.event_id)
         
-        expected_url = "{0}/{1}/{2}".format(api.PODIO_API_URL_1_1, 
-                                            events.EVENTS_BASE_URI, 
+        expected_url = "{0}/{1}/{2}".format(c.PODIO_API_URL_1_1, 
+                                            c.EVENTS_BASE_URI, 
                                             self.event_id)
         
         self.assertDictEqual(result, self.return_dict)
@@ -119,9 +119,9 @@ class LocalIntegrationTest(unittest.TestCase):
         
         result = self.client.get_currencies()
         
-        expected_url = "{0}/{1}/{2}".format(api.PODIO_API_URL_1_1, 
-                                            data.DATA_BASE_URI, 
-                                            data.CURRENCIES_DATA)
+        expected_url = "{0}/{1}/{2}".format(c.PODIO_API_URL_1_1, 
+                                            c.DATA_BASE_URI, 
+                                            c.CURRENCIES_COLLECTION)
         
         self.assertListEqual(result, return_list)
         self.requester.get.assert_called_once_with(expected_url, None)

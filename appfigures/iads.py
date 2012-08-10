@@ -1,8 +1,6 @@
 from appfigures.base import BaseClient
 
 IADS_BASE_URI = "iads"
-IADS_BY_DAY = "dates"
-IADS_BY_COUNTRY = "countries"
 
 class iAdsClient(BaseClient):
 
@@ -12,4 +10,3 @@ class iAdsClient(BaseClient):
     def get_iads(self, report_type, startdate, enddate, **kwargs):
         args = (report_type, startdate, enddate)
         return self.get_response(args, kwargs)
-        

@@ -35,7 +35,7 @@ class ApiClientTest(unittest.TestCase):
         self.flag = True
 
     def test_get_sales_report_by_product(self):
-        from appfigures.sales import SALES_BY_PRODUCT as datasource
+        from appfigures.constants import REPORT_BY_PRODUCT as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -47,7 +47,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
         
     def test_get_sales_report_by_date(self):
-        from appfigures.sales import SALES_BY_DATE as datasource
+        from appfigures.constants import REPORT_BY_DATE as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -58,7 +58,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
         
     def test_get_sales_report_by_country(self):
-        from appfigures.sales import SALES_BY_COUNTRY as datasource
+        from appfigures.constants import REPORT_BY_COUNTRY as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -69,7 +69,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
     
     def test_get_sales_report_by_product_and_date(self):
-        from appfigures.sales import SALES_BY_PRODUCT_AND_DATE as datasource
+        from appfigures.constants import REPORT_BY_PRODUCT_AND_DATE as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -81,7 +81,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
         
     def test_get_sales_report_by_date_and_product(self):
-        from appfigures.sales import SALES_BY_DATE_AND_PRODUCT as datasource
+        from appfigures.constants import REPORT_BY_DATE_AND_PRODUCT as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -93,7 +93,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
         
     def test_get_sales_report_by_product_and_country(self):
-        from appfigures.sales import SALES_BY_PRODUCT_AND_COUNTRY as datasource
+        from appfigures.constants import REPORT_BY_PRODUCT_AND_COUNTRY as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -105,7 +105,7 @@ class ApiClientTest(unittest.TestCase):
                                                                   self.enddate)
         
     def test_get_sales_report_by_country_and_product(self):
-        from appfigures.sales import SALES_BY_COUNTRY_AND_PRODUCT as datasource
+        from appfigures.constants import REPORT_BY_COUNTRY_AND_PRODUCT as datasource
         
         self.client_mock.get_sales_report.return_value = self.result_dict
         
@@ -172,7 +172,7 @@ class ApiClientTest(unittest.TestCase):
         
     
     def test_get_hourly_ranks(self):
-        from appfigures.api import DATASOURCE_HOURLY as datasource
+        from appfigures.constants import REPORT_TYPE_HOURLY as datasource
         
         self.client_mock.get_ranks.return_value = self.result_dict
         
@@ -182,7 +182,7 @@ class ApiClientTest(unittest.TestCase):
                                                            self.startdate, self.enddate)
         
     def test_get_daily_ranks(self):
-        from appfigures.api import DATASOURCE_DAILY as datasource
+        from appfigures.constants import REPORT_TYPE_DAILY as datasource
         
         self.client_mock.get_ranks.return_value = self.result_dict
         
@@ -192,7 +192,7 @@ class ApiClientTest(unittest.TestCase):
                                                            self.startdate, self.enddate)
         
     def test_get_iads_by_day(self):
-        from appfigures.iads import IADS_BY_DAY as report_type
+        from appfigures.constants import REPORT_BY_DATE as report_type
         
         self.client_mock.get_iads.return_value = self.result_dict
         
@@ -204,7 +204,7 @@ class ApiClientTest(unittest.TestCase):
                                                           self.enddate, products=self.mock_list)
         
     def test_get_iads_by_country(self):
-        from appfigures.iads import IADS_BY_COUNTRY as report_type
+        from appfigures.constants import REPORT_BY_COUNTRY as report_type
         
         self.client_mock.get_iads.return_value = self.result_dict
         
@@ -221,7 +221,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_user_info.assert_called_once_with(self.email)
         
     def test_get_user_products(self):
-        from appfigures.users import USERS_PRODUCTS as info_type
+        from appfigures.users import PRODUCTS_COLLECTION as info_type
         
         self.client_mock.get_user_info.return_value = self.result_dict
         
@@ -230,7 +230,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_user_info.assert_called_once_with(self.email, info_type)
         
     def test_get_user_external_accounts(self):
-        from appfigures.users import USERS_EXTERNAL_ACCOUNTS as info_type
+        from appfigures.users import EXTERNAL_ACCOUNTS_COLLECTION as info_type
         
         self.client_mock.get_user_info.return_value = self.result_dict
         
@@ -280,7 +280,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.delete_external_account.assert_called_once_with(self.mock_id)
         
     def test_get_categories(self):
-        from appfigures.data import CATEGORIES_DATA as data_type
+        from appfigures.data import CATEGORIES_COLLECTION as data_type
         
         self.client_mock.get_data.return_value = self.result_dict
         
@@ -289,7 +289,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_data.assert_called_once_with(data_type)
         
     def test_get_currencies(self):
-        from appfigures.data import CURRENCIES_DATA as data_type
+        from appfigures.data import CURRENCIES_COLLECTION as data_type
         
         self.client_mock.get_data.return_value = self.result_dict
         
@@ -298,7 +298,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_data.assert_called_once_with(data_type)
         
     def test_get_languages(self):
-        from appfigures.data import LANGUAGES_DATA as data_type
+        from appfigures.data import LANGUAGES_COLLECTION as data_type
         
         self.client_mock.get_data.return_value = self.result_dict
         
@@ -307,7 +307,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_data.assert_called_once_with(data_type)
         
     def test_get_countries(self):
-        from appfigures.data import COUNTRIES_DATA as data_type
+        from appfigures.data import COUNTRIES_COLLECTION as data_type
         
         self.client_mock.get_data.return_value = self.result_dict
         
@@ -316,7 +316,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_data.assert_called_once_with(data_type)
         
     def test_get_apple_stores(self):
-        from appfigures.data import APPLE_STORE_ID, COUNTRIES_DATA as data_type
+        from appfigures.data import APPLE_STORE_ID, COUNTRIES_COLLECTION as data_type
         
         self.client_mock.get_data.return_value = self.result_dict
         
@@ -326,8 +326,8 @@ class ApiClientTest(unittest.TestCase):
         
         
     def test_get_all_archived_reports(self):
-        from appfigures.archive import ALL_REPORT_TYPE as report_type, \
-                                       ALL_ARCHIVE_REPORTS as scope
+        from appfigures.constants import REPORT_TYPE_ALL as report_type, \
+                                         ALL_REPORTS as scope
         
         self.client_mock.get_archive.return_value = self.result_dict
         
@@ -336,8 +336,8 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_archive.assert_called_once_with(scope, report_type)
         
     def test_get_latest_archived_reports(self):
-        from appfigures.archive import WEEKLY_REPORT_TYPE as report_type, \
-                                       LATEST_ARCHIVE_REPORTS as scope
+        from appfigures.constants import REPORT_TYPE_WEEKLY as report_type, \
+                                         LATEST_REPORTS as scope
         
         self.client_mock.get_archive.return_value = self.result_dict
         
@@ -346,7 +346,7 @@ class ApiClientTest(unittest.TestCase):
         self.client_mock.get_archive.assert_called_once_with(scope, report_type)
         
     def test_get_archived_reports_for_date(self):
-        from appfigures.archive import FINANCIAL_REPORT_TYPE as report_type
+        from appfigures.constants import REPORT_TYPE_FINANCIAL as report_type
         
         self.client_mock.get_archive.return_value = self.result_dict
         

@@ -1,6 +1,9 @@
 from base import BaseClient
 
 RANKS_BASE_URI = "ranks"
+TIMEZONE_USER = "user"
+TIMEZONE_UTC = "utc"
+TIMEZONE_EST = "est"
 
 class RanksClient(BaseClient):
     def __init__(self, result_service, uri=RANKS_BASE_URI):

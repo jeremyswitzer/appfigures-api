@@ -2,7 +2,7 @@ import unittest
 
 from mock import MagicMock
 
-from appfigures.users import UsersClient, USERS_BASE_URI, USERS_PRODUCTS
+from appfigures.users import UsersClient, USERS_BASE_URI, PRODUCTS_COLLECTION
 
 
 class Test(unittest.TestCase):
@@ -24,8 +24,8 @@ class Test(unittest.TestCase):
         self.result_service.get_deserialized_result.assert_called_once_with(expected_args, None)
         
     def test_get_with_info_type(self):
-        result = self.client.get_user_info(self.email, USERS_PRODUCTS)
-        expected_args = (USERS_BASE_URI, self.email, USERS_PRODUCTS)
+        result = self.client.get_user_info(self.email, PRODUCTS_COLLECTION)
+        expected_args = (USERS_BASE_URI, self.email, PRODUCTS_COLLECTION)
         
         self.assertDictEqual(result, self.result_dict)
         self.result_service.get_deserialized_result.assert_called_once_with(expected_args, None)

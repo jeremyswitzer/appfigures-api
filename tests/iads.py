@@ -3,7 +3,8 @@ import unittest
 from datetime import date
 from mock import MagicMock
 
-from appfigures.iads import iAdsClient, IADS_BASE_URI, IADS_BY_DAY
+from appfigures.constants import REPORT_BY_DATE
+from appfigures.iads import iAdsClient, IADS_BASE_URI
 
 
 class iAdsClientTest(unittest.TestCase):
@@ -20,7 +21,7 @@ class iAdsClientTest(unittest.TestCase):
     def test_get_iads(self):
         self.result_service.get_deserialized_result.return_value = self.result_dict
         
-        args = (IADS_BY_DAY, self.startdate, self.enddate)
+        args = (REPORT_BY_DATE, self.startdate, self.enddate)
         params = { 'products': self.products }
         
         result = self.client.get_iads(*args, **params)
