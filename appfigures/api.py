@@ -144,7 +144,7 @@ class Client:
         return self._sales.get_sales_report(const.REPORT_BY_COUNTRY_AND_PRODUCT, startdate, enddate, **kwargs)
     
     #Reviews API
-    def get_reviews_for_product_by_page(self, product_id, page, countries='major', **kwargs):
+    def get_reviews_for_product_by_page(self, product_id, page, countries=const.MAJOR_COUNTRIES, **kwargs):
         """Get reviews for a single product grouped by country. Reviews can only be retrieved a day at a time.
         
         Args:

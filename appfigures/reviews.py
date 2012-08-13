@@ -1,6 +1,8 @@
 from base import BaseClient
 
 REVIEWS_BASE_URI = "reviews"
+MAJOR_COUNTRIES = "major"
+MINOR_COUNTRIES = "minor"
 
 class ReviewsClient(BaseClient):
     def __init__(self, result_service, uri=REVIEWS_BASE_URI):
