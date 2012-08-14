@@ -15,7 +15,7 @@ setup(
   keywords='appfigures',
   packages= find_packages(),
   install_requires = ['requests'],
-  test_requires = ['mock'],
+  tests_require = ['mock'],
   classifiers = [
     'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
