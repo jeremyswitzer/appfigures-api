@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 '''The setup and build script for the appfigures library.'''
 
 __author__ = 'jeremy.switzer@gmail.com'
@@ -13,7 +13,7 @@ setup(
   license='MIT',
   url='https://github.com/jeremyswitzer/appfigures-api',
   keywords='appfigures',
-  packages= find_packages(),
+  packages=['appfigures'],
   install_requires = ['requests'],
   tests_require = ['mock'],
   classifiers = [
